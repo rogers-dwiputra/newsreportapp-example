@@ -9,7 +9,7 @@ React Native Full Day Private 1 Mentor 2 Student (Jakarta & Bandung)
 
 <strong>Lokasi</strong> : PT Basicteknologi Office Jl. Ciparay No 20 Kujangsari, Bandung Kidul, Kota Bandung https://goo.gl/maps/TmaB9PAi5CepCtFSA
 
-<strong>Fee</strong> : Rp. 500,000, (Ruang Kelas AC & Makan Siang, Telegram Study Group, Sertifikat)
+<strong>Fasilitas</strong> : Ruang Kelas AC & Makan Siang, Telegram Study Group & Sertifikat
 
 <strong>Informasi Jadwal Kelas dan Pendaftaran</strong> : 082240206862 / Telegram @rogersdwiputra
 
@@ -20,6 +20,5 @@ React Native Full Day Private 1 Mentor 2 Student (Jakarta & Bandung)
 - Project Structure
 - Networking / Konsumsi API
 - Authentication Flow (Login) dengan React Navigation & AsyncStorage
-- Geolocation & Camera Access
 - Membuat Project "News Reporter"
 - Publish ke Playstore
