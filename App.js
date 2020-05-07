@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { Text, View, Image, FlatList, TouchableNativeFeedback, PermissionsAndroid, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, Image, FlatList, TouchableNativeFeedback, PermissionsAndroid, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -151,6 +151,7 @@ export default function App({ navigation }) {
               options={{
                 title: 'Sign in',
             // When logging out, a pop animation feels intuitive
+                headerShown: false,
                 animationTypeForReplace: state.isSignout ? 'pop' : 'push',
               }}
             />
@@ -159,14 +160,27 @@ export default function App({ navigation }) {
             <>
             <Stack.Screen name="Home" 
             component={HomeScreen} 
-            // options={{
-            //   headerRight: () => (
-            //     <Button
-            //       onPress={() => alert('This is a button!')}
-            //       title="Info"
-            //     />
-            //   )
-            // }}
+            options={{
+              headerRight: () => (
+                <Button
+                  onPress={() => { Alert.alert(
+                    "Alert",
+                    "Logout Akun?",
+                    [
+                      {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      },
+                      { text: "OK", onPress: () => authContext.signOut() }
+                    ],
+                    { cancelable: false }
+                  ) }}
+                  icon="power"
+                  color="#3a3a3a"
+                />
+              ),
+            }}
             />
             <Stack.Screen name="NewsDetails" component={NewsDetails} />
             <Stack.Screen name="Report" component={Report} />

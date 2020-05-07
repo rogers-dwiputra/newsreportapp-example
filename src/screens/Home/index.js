@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import { Provider as PaperProvider, Card, Title, Paragraph, TextInput, Button, FAB, ActivityIndicator } from 'react-native-paper';
+import { Provider as PaperProvider, Card, Title, Paragraph, TextInput, Button, FAB, ActivityIndicator, Avatar } from 'react-native-paper';
 import Geolocation from 'react-native-geolocation-service';
 import { RNCamera } from 'react-native-camera';
 
@@ -43,20 +43,27 @@ export default class HomeScreen extends React.Component {
     renderRow({ item }) { 
       const { navigation } = this.props;
       return (
-        <TouchableNativeFeedback
-            onPress={() => this._beritaClick(item)}
-            background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
-            onPress={() => navigation.navigate('NewsDetails', {
-              newsData: item
-            })}
-            >
-          <Card style={{ marginTop: 16 }}>
-            <Card.Content>
-              <Title>{item.news_title}</Title>
-              <Paragraph>{item.news_content}</Paragraph>
-            </Card.Content>
-          </Card>
-        </TouchableNativeFeedback>
+        <Card style={{marginBottom: 8}}>
+          <Card.Cover source={{ uri: 'data:image/png;base64,'+item.news_image }} />
+          <Card.Content>
+            <Title>{item.news_title}</Title>
+            <Paragraph>{item.news_content}</Paragraph>
+          </Card.Content>
+        </Card>
+        // <TouchableNativeFeedback
+        //     onPress={() => this._beritaClick(item)}
+        //     background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
+        //     onPress={() => navigation.navigate('NewsDetails', {
+        //       newsData: item
+        //     })}
+        //     >
+        //   <Card style={{ marginTop: 16 }}>
+        //     <Card.Content>
+        //       <Title>{item.news_title}</Title>
+        //       <Paragraph>{item.news_content}</Paragraph>
+        //     </Card.Content>
+        //   </Card>
+        // </TouchableNativeFeedback>
       );   
     }
   
@@ -67,9 +74,9 @@ export default class HomeScreen extends React.Component {
     render(){
         const authContext = this.context
         return (
-          <View style={{ flex: 1, marginHorizontal: 4 }}>
-              <Button mode="contained" style={{ marginTop: 8 }} onPress={() => authContext.signOut()}>Log Out</Button>
+          <View style={{ flex: 1, marginHorizontal: 8 }}>
               <FlatList
+                style={{marginTop: 8}}
                 data={this.state.listBerita}
                 renderItem={this.renderRow.bind(this)}
                 onRefresh={() => this.onRefresh()}

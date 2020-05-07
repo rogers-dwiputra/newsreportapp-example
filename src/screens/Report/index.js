@@ -21,7 +21,7 @@ export default class Report extends React.Component {
         latitude: 0,
         longitude: 0,
         openCamera: false,
-        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg=='
+        image: ''
       }
     }
   
@@ -107,8 +107,8 @@ export default class Report extends React.Component {
       const options = { quality: 0.5, base64: true };
       const data = await camera.takePictureAsync(options);
       //  eslint-disable-next-line
-      console.log(data.uri);
-      this.setState({ openCamera: false, image: data.uri });
+      console.log(data.base64);
+      this.setState({ openCamera: false, image: data.base64 });
     };
   
     render(){
@@ -125,7 +125,7 @@ export default class Report extends React.Component {
           <View style={styles.container}>
             <RNCamera
               style={styles.preview}
-              type={RNCamera.Constants.Type.back}
+              type={RNCamera.Constants.Type.front}
               flashMode={RNCamera.Constants.FlashMode.on}
               androidCameraPermissionOptions={{
                 title: 'Permission to use camera',
@@ -156,7 +156,7 @@ export default class Report extends React.Component {
         }
         else {
           return (
-            <View style={{ flex: 1, marginHorizontal: 4 }}>
+            <View style={{ flex: 1, marginHorizontal: 8 }}>
                 <TextInput
                   label='Judul Berita'
                   value={this.state.news_title}
@@ -174,16 +174,19 @@ export default class Report extends React.Component {
                 <Button style={{ marginTop: 8 }} mode="contained" onPress={() => this.setState({ openCamera: true })}>
                   Open Camera
                 </Button>
-                <Image
-                  style={{
-                    marginTop: 8,
-                    marginBottom: 4,
-                    width: 200,
-                    height: 200,
-                    resizeMode: 'contain',
-                  }}
-                  source={{uri: this.state.image }}
-                />
+                {
+                  this.state.image != "" &&
+                  <Image
+                    style={{
+                      marginTop: 8,
+                      marginBottom: 4,
+                      width: 200,
+                      height: 200,
+                      resizeMode: 'contain',
+                    }}
+                    source={{uri: this.state.image }}
+                  />
+                }
                 <Button style={{ marginTop: 8 }} mode="contained" onPress={() => this.submitBerita()}>
                   Submit
                 </Button>
