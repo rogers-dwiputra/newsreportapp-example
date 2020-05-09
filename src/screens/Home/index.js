@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component {
     axios.get('https://basicteknologi.co.id/newsreportapi/index.php/api/news')
     .then((response) => {
       // handle success
-      console.log(response.data.data);
+      // console.log(response.data.data);
       this.setState({listBerita: response.data.data});
       this.setState({ isLoading: false });
     })
@@ -43,27 +43,21 @@ export default class HomeScreen extends React.Component {
     renderRow({ item }) { 
       const { navigation } = this.props;
       return (
-        <Card style={{marginBottom: 8}}>
-          <Card.Cover source={{ uri: 'data:image/png;base64,'+item.news_image }} />
-          <Card.Content>
-            <Title>{item.news_title}</Title>
-            <Paragraph>{item.news_content}</Paragraph>
-          </Card.Content>
-        </Card>
-        // <TouchableNativeFeedback
-        //     onPress={() => this._beritaClick(item)}
-        //     background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
-        //     onPress={() => navigation.navigate('NewsDetails', {
-        //       newsData: item
-        //     })}
-        //     >
-        //   <Card style={{ marginTop: 16 }}>
-        //     <Card.Content>
-        //       <Title>{item.news_title}</Title>
-        //       <Paragraph>{item.news_content}</Paragraph>
-        //     </Card.Content>
-        //   </Card>
-        // </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+            onPress={() => this._beritaClick(item)}
+            background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
+            onPress={() => navigation.navigate('NewsDetails', {
+              newsData: item
+            })}
+            >
+          <Card style={{marginBottom: 8}}>
+            <Card.Cover source={{ uri: 'data:image/png;base64,'+item.news_image }} />
+            <Card.Content>
+              <Title>{item.news_title}</Title>
+              <Paragraph>{item.news_content}</Paragraph>
+            </Card.Content>
+          </Card>
+        </TouchableNativeFeedback>
       );   
     }
   

@@ -21,7 +21,8 @@ export default class Report extends React.Component {
         latitude: 0,
         longitude: 0,
         openCamera: false,
-        image: ''
+        image: '',
+        imageUri: ''
       }
     }
   
@@ -45,7 +46,7 @@ export default class Report extends React.Component {
           Geolocation.getCurrentPosition(
               (position) => {
                   console.log(position);
-                  this.setState({ isLoading: false });
+                  this.setState({ isLoading: false, latitude: position.coords.latitude, longitude: position.coords.longitude });
               },
               (error) => {
                   // See error code charts below.
@@ -71,6 +72,7 @@ export default class Report extends React.Component {
     }
   
     submitBerita = () => {
+      console.log(this.state.latitude+","+this.state.longitude);
       this.setState({ isLoading: true });
       axios.post('https://basicteknologi.co.id/newsreportapi/index.php/api/news/report', {
         news_title: this.state.news_title,
@@ -81,7 +83,7 @@ export default class Report extends React.Component {
       })
       .then((response) => {
         this.setState({ isLoading: false });
-        console.log(response);
+        // console.log(response);
         if(response.data.status == true){
           this.setState({
             news_title: "",
@@ -107,8 +109,8 @@ export default class Report extends React.Component {
       const options = { quality: 0.5, base64: true };
       const data = await camera.takePictureAsync(options);
       //  eslint-disable-next-line
-      console.log(data.base64);
-      this.setState({ openCamera: false, image: data.base64 });
+      // console.log(data.base64);
+      this.setState({ openCamera: false, image: data.base64, imageUri: data.uri });
     };
   
     render(){
@@ -175,7 +177,7 @@ export default class Report extends React.Component {
                   Open Camera
                 </Button>
                 {
-                  this.state.image != "" &&
+                  this.state.imageUri != "" &&
                   <Image
                     style={{
                       marginTop: 8,
@@ -184,7 +186,7 @@ export default class Report extends React.Component {
                       height: 200,
                       resizeMode: 'contain',
                     }}
-                    source={{uri: this.state.image }}
+                    source={{uri: this.state.imageUri }}
                   />
                 }
                 <Button style={{ marginTop: 8 }} mode="contained" onPress={() => this.submitBerita()}>
